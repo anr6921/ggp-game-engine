@@ -15,7 +15,12 @@ DXCore* DXCore::DXCoreInstance = 0;
 // This needs to be a global function (not part of a class), but we want
 // to forward the parameters to our class to properly handle them.
 // --------------------------------------------------------
+extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 LRESULT DXCore::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+	// route messages to ImGui proc handler
+	if (ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam))
+		return true;
+
 	return DXCoreInstance->ProcessMessage(hWnd, uMsg, wParam, lParam);
 }
 

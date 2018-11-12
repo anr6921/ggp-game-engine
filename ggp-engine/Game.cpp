@@ -65,6 +65,11 @@ Game::~Game() {
 	lightManager->ReleaseInstance();
     physicsManager->ReleaseInstance();
 
+	// Clean up ImGui
+	ImGui_ImplDX11_Shutdown();
+	ImGui_ImplWin32_Shutdown();
+	ImGui::DestroyContext();
+
 	delete activeScene;
 }
 
@@ -91,6 +96,14 @@ void Game::Init() {
 	renderManager->Start();
 	//Call start on the active scene
 	activeScene->Start();
+
+	// Setup ImGui
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO();
+	ImGui_ImplWin32_Init(hWnd);
+	ImGui_ImplDX11_Init(this->dxDevice, this->dxContext);
+	ImGui::StyleColorsDark();
 }
 
 // --------------------------------------------------------
@@ -139,6 +152,19 @@ void Game::Draw(float deltaTime, float totalTime) {
 
 	//Call render on the renderManager
 	renderManager->Render(dxContext);
+
+	// ImGui Draw
+	// Start the ImGui frame
+	ImGui_ImplDX11_NewFrame();
+	ImGui_ImplWin32_NewFrame();
+	ImGui::NewFrame();
+	// Create ImGui window
+	ImGui::Begin("Test Boi");
+	ImGui::End();
+	// Assemble together draw data
+	ImGui::Render();
+	// Render draw data
+	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 
 	// Present the back buffer to the user
 	//  - Puts the final frame we're drawing into the window so the user can see it
