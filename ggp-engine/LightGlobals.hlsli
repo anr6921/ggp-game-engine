@@ -233,7 +233,7 @@ float3 applyNormalMap(float3 _normal, float3 _tangent, float3 _mapNormal) {
 	//Construct TBN matrix
 	//NOTE: I followed the demo on mycourses for this (Game Graphics Programming)
 	//Normal
-	float3 N = _normal;
+	float3 N = normalize(_normal);
 	//Tangent
 	float3 T = normalize(_tangent - N * dot(_tangent, N));
 	//Bi-tangent

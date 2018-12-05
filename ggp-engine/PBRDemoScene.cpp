@@ -27,9 +27,11 @@ void PBRDemoScene::Init() {
 	pbrMats[3] = resourceManager->GetPBRMaterial("woodFloorPBR", L"VertexShader.cso", L"PBRPShader.cso", L"assets/textures/PBR/woodFloor_a.jpg", L"assets/textures/PBR/woodFloor_n.jpg", L"assets/textures/PBR/woodFloor_r.jpg", nullptr);
 	pbrMats[4] = resourceManager->GetPBRMaterial("marblePBR", L"VertexShader.cso", L"PBRPShader.cso", L"assets/textures/PBR/marble_a.jpg", L"assets/textures/PBR/marble_n.jpg", L"assets/textures/PBR/marble_r.jpg", nullptr);
 	pbrMats[5] = resourceManager->GetPBRMaterial("tactilePavingPBR", L"VertexShader.cso", L"PBRPShader.cso", L"assets/textures/PBR/tactilePaving_a.jpg", L"assets/textures/PBR/tactilePaving_n.jpg", L"assets/textures/PBR/tactilePaving_r.jpg", nullptr);
+	Material* tactilePaving = resourceManager->AddMaterial("tactilePaving", L"VertexShader.cso", L"PhongPShader.cso", L"assets/textures/PBR/gravel_a.jpg");
+	tactilePaving->SetNormalMap(resourceManager->GetTexture(L"assets/textures/PBR/gravel_n.jpg"));
 	pbrMats[6] = resourceManager->GetPBRMaterial("gravelPBR", L"VertexShader.cso", L"PBRPShader.cso", L"assets/textures/PBR/gravel_a.jpg", L"assets/textures/PBR/gravel_n.jpg", L"assets/textures/PBR/gravel_r.jpg", nullptr);
 	//Load a sphere mesh
-	Mesh* sphereMesh = resourceManager->GetMesh("assets/meshes/sphere.obj");
+	Mesh* sphereMesh = resourceManager->GetMesh("assets/meshes/cube.obj");
 	//Mesh* sphereMesh = resourceManager->GenerateCube(1.0f, 2.0f);
 	//Create a line of white spheres.
 	for (UINT i = 0; i < 7; i++) {
@@ -44,6 +46,13 @@ void PBRDemoScene::Init() {
 
 		newSphere->transform.position.x = (float)i * 1.2f;
 	}
+
+	GameObject* newTacPavObj = new GameObject("Sphere");
+	AddChild(newTacPavObj);
+	MeshRenderer* tacMeshRend = newTacPavObj->AddComponent<MeshRenderer>(newTacPavObj);
+	tacMeshRend->SetMesh(sphereMesh);
+	tacMeshRend->SetMaterial(tactilePaving);
+	newTacPavObj->transform.position.x -= 2;
 
 	//Create a single, white directional light
 	GameObject* dirLight = new GameObject("dirLight1");
@@ -86,13 +95,13 @@ void PBRDemoScene::Init() {
 	activeCamera->CalculateViewMatrix();
 
 	//Load terrain
-	GameObject* terrain = new GameObject("testTerrain");
-	Mesh* terrainMesh = resourceManager->GetTerrain("assets/terrain/testTerrain.raw", 513, 100.0f);
-	AddChild(terrain);
-	terrain->AddComponent<MeshRenderer>(terrain);
-	terrain->GetComponentType<MeshRenderer>()->SetMesh(terrainMesh);
-	terrain->GetComponentType<MeshRenderer>()->SetMaterial(pbrMats[6]);
-	terrain->transform.position.y = -3.0f;
+	//GameObject* terrain = new GameObject("testTerrain");
+	//Mesh* terrainMesh = resourceManager->GetTerrain("assets/terrain/testTerrain.raw", 513, 100.0f);
+	//AddChild(terrain);
+	//terrain->AddComponent<MeshRenderer>(terrain);
+	//terrain->GetComponentType<MeshRenderer>()->SetMesh(terrainMesh);
+	//terrain->GetComponentType<MeshRenderer>()->SetMaterial(pbrMats[6]);
+	//terrain->transform.position.y = -3.0f;
 }
 
 void PBRDemoScene::Start() {
