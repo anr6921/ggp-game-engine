@@ -18,7 +18,7 @@ void PBRDemoScene::Init() {
 	Scene::Init();
 
 	Material* blueMatte = resourceManager->AddMaterial("blueMatte", XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f), 0.0f);
-	PBRMaterial* pbrMats[7];
+	PBRMaterial* pbrMats[86];
 	//Create a PBR material for testing
 	pbrMats[0] = resourceManager->GetPBRMaterial("icePBR", L"VertexShader.cso", L"PBRPShader.cso", L"assets/textures/PBR/ice_a.jpg", L"assets/textures/PBR/ice_n.jpg", L"assets/textures/PBR/ice_r.jpg", nullptr);
 	pbrMats[1] = resourceManager->GetPBRMaterial("goldPBR", L"VertexShader.cso", L"PBRPShader.cso", L"assets/textures/PBR/gold_a.jpg", L"assets/textures/PBR/gold_n.jpg", L"assets/textures/PBR/gold_r.jpg", L"assets/textures/PBR/gold_m.jpg");
@@ -27,11 +27,12 @@ void PBRDemoScene::Init() {
 	pbrMats[4] = resourceManager->GetPBRMaterial("marblePBR", L"VertexShader.cso", L"PBRPShader.cso", L"assets/textures/PBR/marble_a.jpg", L"assets/textures/PBR/marble_n.jpg", L"assets/textures/PBR/marble_r.jpg", nullptr);
 	pbrMats[5] = resourceManager->GetPBRMaterial("tactilePavingPBR", L"VertexShader.cso", L"PBRPShader.cso", L"assets/textures/PBR/tactilePaving_a.jpg", L"assets/textures/PBR/tactilePaving_n.jpg", L"assets/textures/PBR/tactilePaving_r.jpg", nullptr);
 	pbrMats[6] = resourceManager->GetPBRMaterial("gravelPBR", L"VertexShader.cso", L"PBRPShader.cso", L"assets/textures/PBR/gravel_a.jpg", L"assets/textures/PBR/gravel_n.jpg", L"assets/textures/PBR/gravel_r.jpg", nullptr);
+	pbrMats[7] = resourceManager->GetPBRMaterial("waterPBR", L"VertexShader.cso", L"PBRPShader.cso", L"assets/textures/PBR/water_a.jpg", L"assets/textures/PBR/water_n.jpg", L"assets/textures/PBR/water_r.jpg", nullptr);
 	//Load a sphere mesh
 	Mesh* sphereMesh = resourceManager->GetMesh("assets/meshes/sphere.obj");
 	//Mesh* sphereMesh = resourceManager->GenerateCube(1.0f, 2.0f);
 	//Create a line of white spheres.
-	for (UINT i = 0; i < 7; i++) {
+	for (UINT i = 0; i < 8; i++) {
 		GameObject* newSphere = new GameObject("Sphere");
 		AddChild(newSphere);
 		MeshRenderer* aMeshRend = newSphere->AddComponent<MeshRenderer>(newSphere);
